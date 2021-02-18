@@ -1,7 +1,7 @@
 #include "shell.h"
-// funciones para el manejo de strings
+/* Functions to manage strings */
 
-/*
+/**
  * _strcat - entry to _strcat
  * Desc: _strcat function thar appends strings
  * @dest: pointer char type
@@ -10,9 +10,9 @@
 */
 char *_strcat(char *dest, char *src)
 {
-  int i = 0, e = 0;
+	int i = 0, e = 0;
 
-  while (dest[i] != '\0')
+	while (dest[i] != '\0')
 	{
 		i++;
 	}
@@ -53,80 +53,45 @@ char *_strdup(char *str)
 	return (j);
 }
 
-/*
+/**
  * _strlen - entry to _strlen
  * Desc: _strlen calculates a length of a string
  * @s: pointer char type
- * Return: returns int, length of string 
+ * Return: returns int, length of string
 */
 int _strlen(char *s)
 {
-  int x = 0;
+	int x = 0;
 
-  while(*s != '\0')
-  {
-    s++;
-    x++;
-  }
-  return (x);
+	while (*s != '\0')
+	{
+		s++;
+		x++;
+	}
+	return (x);
 }
 
-// convertir char * numerico a integer
+/**
+ * char_toint - entry to toint
+ * Desc: char_toint function that transforms char pointer numerical
+ * to integer
+ * @arg: char pointer to string
+ * Return: returns value int
+ */
 int char_toint(char *arg)
 {
-  int i, val = -1;
+	int i, val = -1;
 
-  for (i = 0; i < _strlen(arg); i++)
-  {
-    if (val == -1)
-    {
-      val = ((int)arg[i] - 48);
-      continue;
-    }
-    val *= 10;
-    val += ((int)arg[i] - 48);
-  }
+	for (i = 0; i < _strlen(arg); i++)
+	{
+		if (val == -1)
+		{
+			val = ((int)arg[i] - 48);
+			continue;
+		}
+		val *= 10;
+		val += ((int)arg[i] - 48);
+	}
 
-  return (val);
+	return (val);
 }
-
-
-// convertir numero entero a string
-/**
-char *num_tochar(int num)
-{
-  char buff[11];
-  int idx = 0;
-  while(num)
-  {
-      int dig = num % 10;
-      char ch = (dig + '0');
-      buff[idx++] = ch;
-      num /= 10;
-  }
-  buff[idx] = '\0';
-
-  return _strdup(buff);
-}
-
-// reversa string eliminando el bloque de memoria del anterior
-char *rev(char *str)
-{
-  char *new_str = NULL;
-  int size, it = 0;
-
-  if (!str)
-    return (NULL);
-
-  size = _strlen(str);
-  new_str = malloc(sizeof(char) * (size + 1));
-  while (size > 0)
-  {
-    new_str[it++] = str[--size];
-  }
-
-  new_str[it] = '\0';
-  free(str);
-  return (new_str);
-}
-**/

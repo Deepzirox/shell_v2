@@ -39,6 +39,7 @@ void exit_handler(cmdbuf_t *cmd, int *exit_var_addr);
 void print_env(cmdbuf_t *cmd, char **env);
 void change_dir(cmdbuf_t *cmd);
 void parse_env(cmdbuf_t **cmd);
+void prompt();
 int _strlen(char *s);
 char *_strcat(char *dest, char *src);
 char *_strdup(char *str);

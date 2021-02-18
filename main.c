@@ -1,5 +1,6 @@
 #include "shell.h"
 #include <stdio.h>
+#include <unistd.h>
 
 int console_mode(char **env);
 
@@ -18,7 +19,6 @@ int main(int argc, char **argv, char **env)
     }
     return (exit_code);
   }
-  get_env("HOLA\0", env);
   return (exit_code);
 }
 
@@ -28,6 +28,8 @@ int console_mode(char **env)
 
   while (exit_call == -1)
   {
+    prompt();
+    fflush(STDIN_FILENO);
     input_t *input = get_input();
     cmdbuf_t *cmd = parse_input(input);
 

@@ -1,4 +1,6 @@
 #include "shell.h"
+#include <stdio.h>
+#include <unistd.h>
 // funciones para manejar los child
 
 int forking(cmdbuf_t *cmd)
@@ -8,13 +10,11 @@ int forking(cmdbuf_t *cmd)
   int execve_code = 0;
 
   child = fork();
-
   if (child == -1)
   {
     perror("fork child error");
     return (1);
   }
-
   if (child == 0)
   {
     if (cmd->argv[0])

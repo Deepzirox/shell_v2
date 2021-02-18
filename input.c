@@ -6,22 +6,26 @@ input_t *get_input()
 {
     //Buffer que va a contener lo que voy a leer del stdin
     char stack[READ_SIZE];
-    char curr_p[1000];
-    time_t rawtime;
-    struct tm *i;
     input_t *input = NULL;
-    int n;
+    char *inp = NULL;
+    int n, x;
 
-    getcwd(curr_p, sizeof(curr_p));
-    time( &rawtime );
-    i = localtime( &rawtime );
-    printf("(%d:%d:%d)~(%s)-> ", i->tm_hour, i->tm_min, i->tm_sec, curr_p);
+    n = read(STDIN_FILENO, stack, 1024);
+    if (n < 1)
+      exit(0);
+    inp = malloc(1024);
+    for (x = 0; x < n; x++)
+    {
+      inp[x] = stack[x];
+    }
+    if (x > 1)
+      inp[x - 1] = '\0';
+    else
+      inp[x] = '\0';
     input = malloc(sizeof(input_t));
-    fflush(0);
-    n = read(STDIN, stack, READ_SIZE);
-    stack[n - 1] = '\0';
-    input->buffer = _strdup(stack);
+    input->buffer = _strdup(inp);
     input->size = (size_t)n;
+    free(inp);
     return input;
 }
 
@@ -44,4 +48,18 @@ cmdbuf_t *parse_input(input_t *input)
     cmd->env = NULL;
     
   return (cmd);
+}
+
+void prompt()
+{
+  char curr_p[1000];
+  time_t rawtime;
+  struct tm *i;
+  char buff[2000];
+
+  getcwd(curr_p, sizeof(curr_p));
+  time( &rawtime );
+  i = localtime( &rawtime );
+  sprintf(buff, "(%d:%d:%d)~(%s)-> ", i->tm_hour, i->tm_min, i->tm_sec, curr_p);
+  write(0, buff, _strlen(buff));
 }

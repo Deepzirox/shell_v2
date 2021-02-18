@@ -1,6 +1,5 @@
 #include "shell.h"
-#include <stdio.h>
-#include <unistd.h>
+
 
 input_t *get_input()
 {
@@ -9,7 +8,7 @@ input_t *get_input()
     input_t *input = NULL;
     int n;
 
-    n = read(STDIN_FILENO, stack, 1024);
+    n = read(STDIN_FILENO, stack, READ_SIZE);
     if (n < 1)
       exit(0);
     stack[n - 1] = '\0';
@@ -43,10 +42,9 @@ cmdbuf_t *parse_input(input_t *input)
 
 void prompt()
 {
-  char curr_p[1000];
   time_t rawtime;
   struct tm *i;
-  char buff[2000];
+  char buff[2000], curr_p[1000];
 
   getcwd(curr_p, sizeof(curr_p));
   time( &rawtime );

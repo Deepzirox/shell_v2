@@ -1,5 +1,13 @@
 #include "shell.h"
 
+/**
+ * sig - handle signal
+ * @n: signum
+ */
+void _signal(int n)
+{
+	exit(n);
+}
 
 input_t *get_input()
 {
@@ -8,6 +16,7 @@ input_t *get_input()
     input_t *input = NULL;
     int n;
 
+    signal(SIGINT, _signal);
     n = read(STDIN_FILENO, stack, READ_SIZE);
     if (n < 1)
       exit(0);
@@ -49,7 +58,7 @@ void prompt()
   getcwd(curr_p, sizeof(curr_p));
   time( &rawtime );
   i = localtime(&rawtime);
-  sprintf(buff, "%s(%d:%d:%d)~%s(%s)->%s ", 
+  sprintf(buff, "%s(%d:%d:%d)~%s(%s)\n>>> %s ", 
     KRED, i->tm_hour, i->tm_min, i->tm_sec, KBLU, curr_p, KGRN);
   write(0, buff, _strlen(buff));
 }

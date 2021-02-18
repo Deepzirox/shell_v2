@@ -7,25 +7,16 @@ input_t *get_input()
     //Buffer que va a contener lo que voy a leer del stdin
     char stack[READ_SIZE];
     input_t *input = NULL;
-    char *inp = NULL;
-    int n, x;
+    int n;
 
     n = read(STDIN_FILENO, stack, 1024);
     if (n < 1)
       exit(0);
-    inp = malloc(1024);
-    for (x = 0; x < n; x++)
-    {
-      inp[x] = stack[x];
-    }
-    if (x > 1)
-      inp[x - 1] = '\0';
-    else
-      inp[x] = '\0';
+    stack[n - 1] = '\0';
     input = malloc(sizeof(input_t));
-    input->buffer = _strdup(inp);
+    input->buffer = _strdup(stack);
     input->size = (size_t)n;
-    free(inp);
+
     return input;
 }
 

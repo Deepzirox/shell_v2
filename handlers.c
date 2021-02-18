@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <stdio.h>
 #include <string.h>
 // funciones que se encargan de manejar los comandos especiales como cd o exit
 
@@ -56,7 +57,7 @@ void change_dir(cmdbuf_t *cmd)
   {
     err_handler = chdir(cmd->argv[1]);
     if (err_handler < 0)
-      printf("Error changing directory\n");
+      perror("cd");
   }
   else
   {

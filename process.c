@@ -21,6 +21,7 @@ int forking(cmdbuf_t *cmd)
     {
       if ((execve_code = execve(cmd->argv[0], cmd->argv, NULL)) == -1)
       {
+        perror(cmd->argv[0]);
         destroy(cmd->argv, cmd->size);
         free(cmd);
         exit(execve_code);

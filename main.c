@@ -1,6 +1,5 @@
 #include "shell.h"
-#include <stdio.h>
-#include <unistd.h>
+
 
 int run_shell(char **env);
 

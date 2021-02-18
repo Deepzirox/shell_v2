@@ -2,27 +2,17 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int console_mode(char **env);
+int run_shell(char **env);
 
 int main(int argc, char **argv, char **env)
 {
-  int test_console = 1;
   int exit_code = 0;
 
-  if (test_console)
-  {
-    switch (argc)
-    {
-      case 1:
-        exit_code = console_mode(env);
-        break;
-    }
-    return (exit_code);
-  }
+  exit_code = run_shell(env);
   return (exit_code);
 }
 
-int console_mode(char **env)
+int run_shell(char **env)
 {
   int exit_call = -1;
 
@@ -54,8 +44,6 @@ int console_mode(char **env)
       cmd->argv[0] = parse_alias(cmd->argv[0]);
     }
     forking(cmd);
-    destroy(cmd->argv, cmd->size);
-    free(cmd);
   }
   return (exit_call);
 }

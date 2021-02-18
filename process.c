@@ -33,6 +33,8 @@ int forking(cmdbuf_t *cmd)
   else
   {
     wait(&wgstatus);
+    destroy(cmd->argv, cmd->size);
+    free(cmd);
     return (wgstatus);
   }
   return (0);

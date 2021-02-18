@@ -51,6 +51,7 @@ void prompt()
   getcwd(curr_p, sizeof(curr_p));
   time( &rawtime );
   i = localtime( &rawtime );
-  sprintf(buff, "(%d:%d:%d)~(%s)-> ", i->tm_hour, i->tm_min, i->tm_sec, curr_p);
+  sprintf(buff, "%s(%d:%d:%d)~%s(%s)->%s ", 
+    KRED, i->tm_hour, i->tm_min, i->tm_sec, KBLU, curr_p, KGRN);
   write(0, buff, _strlen(buff));
 }

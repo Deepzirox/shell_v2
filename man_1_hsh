@@ -1,20 +1,70 @@
 .\" Manpage for Shell v2.
 .\" Contact 1611@holbertonschool.com or 1209@holbertonschool.com to correct errors or typos.
-.TH man "16 Feb 2021" "0.1" "shell_v2 man page"
+.TH HSH 1 "February 18" "Shell v2 coreutils 0.1"
 .SH NAME
 hsh \- Holberston Shell
 .SH SYNOPSIS
-./hsh [option] [argument]
+hsh
+.PP
+-> [command] [option]... [argument | file]
 .SH COPYRIGHT
 hsh is a Copyright (C) 2021 by Holberton Low-level Team
 .SH DESCRIPTION
-The shell is an interactive interface that allows users to execute commands and utilities in Linux and other UNIX based operatin systems. The shell lets the user interact internally with the system by using built-in functions. When a user types in a command, this is interpreted as an input that will execute a program. Once the program is finished, it will display an output.
+.B Hsh
+is an interactive interface that allows users to execute commands and utilities in Linux and other UNIX based operatin systems. The shell lets the user interact internally with the system by using built-in functions. When a user types in a command, this is interpreted as an input that will execute a program. Once the program is finished, it will display an output.
 .SH OPTIONS
-The shell v2 (hsh) takes options, e.g. ls -la, will parse the string and whenever there is a '-' if the command has and option the shell v2 will output it correctly. If you have any questions on the options of the commands available in the /bin/ directory check the man pages 
+The shell v2 (
+.B hsh
+) takes options, e.g.
+.B ls -la, cat [
+.I filename
+.B ],
+parsing the string and separating each argument. Whenever there is a
+.B '-',
+.B hsh
+shell v2 interpreter will identify it as an
+.I option.
+.PP
+If the
+.I option
+is not a valid
+.I option,
+.B hsh
+will output an error message with an invalid or not found message.
+.PP
+If you have any questions on the usage of the options for each command check its man page (
+.B man ls, man echo, man cat,
+etc.).
+.SH ARGUMENTS
+The first argument will always be assumed to be the name of a file containing shell commands. These shell commands are stored in the
+.B /bin
+folder.
+.B Hsh
+shell receives the command name, e.g.
+.B ls, cat, echo, date, mkdir, touch, mv,
+etc. or can also receive the path to the command, e.g.
+.B /bin/ls, /bin/cat, /bin/echo,
+etc.
+.PP
+If
+.B hsh
+is invoked this way,
+.B $0
+is the name of the file, and the positional parameters are set to the remaining arguments ([
+.I option
+], [
+.I argument
+]).
+.B Hsh
+reads and executes commands from the file, then exits. If no command is executed,
+.B hsh
+will return exit status 0.
+.SH FILES
 .SH SEE ALSO
 bash(1), sh or dash(1)
 .SH BUGS
 No known bugs. If you find any bugs please send your bugs to the AUTHOR's emails.
-.SH AUTHOR
+.SH AUTHORS
 Camilo Tobón (1161@holbertonschool.com)
+.PP
 Luis Herrera (1209@holbertonschool.com)

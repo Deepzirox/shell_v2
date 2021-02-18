@@ -3,7 +3,7 @@
 // se encarga de parsear los argumentos si hay variable existente
 void parse_env(cmdbuf_t **cmd)
 {
-  int i;
+  size_t i;
   cmdbuf_t *tmp = *cmd;
   char *tmp_str = NULL;
 

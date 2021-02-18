@@ -11,6 +11,7 @@
 #include <errno.h>
 
 #define READ_SIZE 1024
+#define UNUSED(x) (void)(x)
 
 #define KNRM  "\x1B[0m"
 #define KRED  "\x1B[31m"

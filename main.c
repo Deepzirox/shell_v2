@@ -7,6 +7,8 @@ int main(int argc, char **argv, char **env)
 {
   int exit_code = 0;
 
+  UNUSED(argc);
+  UNUSED(argv);
   exit_code = run_shell(env);
   return (exit_code);
 }

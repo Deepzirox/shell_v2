@@ -1,6 +1,6 @@
 #include "shell.h"
 
-int run_shell(char **env);
+int run_shell(char *errname, char **env);
 
 /**
  * main - entry to main
@@ -15,8 +15,7 @@ int main(int argc, char **argv, char **env)
 	int exit_code = 0;
 
 	UNUSED(argc);
-	UNUSED(argv);
-	exit_code = run_shell(env);
+	exit_code = run_shell(argv[0], env);
 	return (exit_code);
 }
 
@@ -26,17 +25,19 @@ int main(int argc, char **argv, char **env)
  * @env: double pointer to environment variables
  * Return: returns a prompt to hsh shell v2
  */
-int run_shell(char **env)
+int run_shell(char *errname, char **env)
 {
 	int exit_call = -1;
+	int proc_result = 0;
 
 	while (exit_call == -1)
 	{
 		prompt();
 		fflush(STDIN_FILENO);
-		input_t *input = get_input();
+		input_t *input = get_input(proc_result);
 		cmdbuf_t *cmd = parse_input(input);
-
+		cmd->err_name = errname;
+		cmd->pre_alias = _strdup(cmd->argv[0]);
 		cmd->env = env;
 		parse_env(&cmd);
 		free(input->buffer);
@@ -57,7 +58,7 @@ int run_shell(char **env)
 			}
 			cmd->argv[0] = parse_alias(cmd->argv[0]);
 		}
-		forking(cmd);
+		proc_result = forking(cmd);
 	}
-	return (exit_call);
+	return (proc_result);
 }

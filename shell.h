@@ -36,6 +36,8 @@ typedef struct CommandBuffer
 {
 	char **env;
 	char **argv;
+	char *err_name;
+	char *pre_alias;
 	size_t size;
 } cmdbuf_t;
 
@@ -53,12 +55,9 @@ typedef struct InputBuffer
 	size_t size;
 } input_t;
 
-/* Input handlers */
-input_t *get_input();
+input_t *get_input(int proc_result);
 cmdbuf_t *parse_input(input_t *input);
-/* Size handlers */
 size_t n_argv_allocate(input_t *input);
-/* String handlers */
 int counttok(char *buff);
 int check_handlers(char *str);
 int char_toint(char *arg);
@@ -68,6 +67,7 @@ void exit_handler(cmdbuf_t *cmd, int *exit_var_addr);
 void print_env(cmdbuf_t *cmd, char **env);
 void change_dir(cmdbuf_t *cmd);
 void parse_env(cmdbuf_t **cmd);
+void drop(cmdbuf_t *cmd);
 void prompt(void);
 int _strlen(char *s);
 char *_strcat(char *dest, char *src);
@@ -75,5 +75,5 @@ char *_strdup(char *str);
 char *parse_alias(char *exe);
 char *get_env(char *varname, char **env);
 int forking(cmdbuf_t *cmd);
-
+int eq(char *str1, char* str2);
 #endif

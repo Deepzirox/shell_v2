@@ -16,7 +16,7 @@ void _signal(int n)
  * Desc: get_input function that reads stdin
  * Return: returns buffer stdin input
  */
-input_t *get_input()
+input_t *get_input(int proc_result)
 {
 	/* Buffer that contains stdin input */
 	char stack[READ_SIZE];
@@ -24,9 +24,10 @@ input_t *get_input()
 	int n;
 
 	signal(SIGINT, _signal);
+	signal(SIGPIPE, _signal);
 	n = read(STDIN_FILENO, stack, READ_SIZE);
 	if (n < 1)
-		exit(0);
+		exit(proc_result);
 	stack[n - 1] = '\0';
 	input = malloc(sizeof(input_t));
 	input->buffer = _strdup(stack);
@@ -74,4 +75,5 @@ void prompt(void)
 	sprintf(buff, "%s(%d:%d:%d)~%s(%s)\n>>> %s ",
 		KRED, i->tm_hour, i->tm_min, i->tm_sec, KBLU, curr_p, KGRN);
 	write(0, buff, _strlen(buff));
+	fflush(STDIN_FILENO);
 }

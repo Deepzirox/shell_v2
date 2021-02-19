@@ -46,16 +46,15 @@ void print_env(cmdbuf_t *cmd, char **env)
 	{
 		printf("%s\n", env[i]);
 	}
-	destroy(cmd->argv, cmd->size);
-	free(cmd);
+	drop(cmd);
 }
 
 /**
  * get_env - entry point
- * Desc: get_env function that compares strings
+ * Desc: get_env funcion that gets value of env
  * @varname: pointer char type to variable name
- * @env: double pointer to stored char
- * Return: returns pointer to new duplicate string or NULL
+ * @env: double pointer to the enviroment
+ * Return: returns pointer to the value of the variable
  */
 char *get_env(char *varname, char **env)
 {

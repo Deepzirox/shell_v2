@@ -1,5 +1,14 @@
 #include "shell.h"
+#include <stdio.h>
 /* Functions to child processes */
+
+// me ahorra 3 lineas de codigo xd
+void drop(cmdbuf_t *cmd)
+{
+	destroy(cmd->argv, cmd->size);
+	free(cmd->pre_alias);
+	free(cmd);
+}
 
 /**
  * forking - entry point
@@ -11,37 +20,35 @@ int forking(cmdbuf_t *cmd)
 {
 	pid_t child;
 	int wgstatus;
-	int execve_code = 0;
+	int quit = 0;
 
 	child = fork();
 	if (child == -1)
-	{
-		perror("fork child error");
-		return (1);
-	}
+		return(1);
+	
 	if (child == 0)
 	{
 		if (cmd->argv[0])
 		{
-			execve_code = execve(cmd->argv[0], cmd->argv, NULL);
-			if (execve_code == -1)
+			quit = execve(cmd->argv[0], cmd->argv, NULL);
+			if (quit == -1)
 			{
-				perror(cmd->argv[0]);
-				destroy(cmd->argv, cmd->size);
-				free(cmd);
-				exit(execve_code);
+				quit = 127;
+				fprintf(stderr, "%s: %d: %s: not found\n", 
+					cmd->err_name, 1, cmd->pre_alias);
+				drop(cmd);
+				exit(quit);
 			}
 		}
-		destroy(cmd->argv, cmd->size);
-		free(cmd);
-		exit(execve_code);
+		drop(cmd);
+		exit(quit);
 	}
 	else
 	{
 		wait(&wgstatus);
-		destroy(cmd->argv, cmd->size);
-		free(cmd);
-		return (wgstatus);
+		drop(cmd);
+		quit = WEXITSTATUS(wgstatus);
+		return (quit);
 	}
 	return (0);
 }

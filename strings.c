@@ -71,27 +71,17 @@ int _strlen(char *s)
 	return (x);
 }
 
-/**
- * char_toint - entry to toint
- * Desc: char_toint function that transforms char pointer numerical
- * to integer
- * @arg: char pointer to string
- * Return: returns value int
- */
-int char_toint(char *arg)
+// compara 2 strings si son iguales 0 falso 1 verdadero
+int eq(char *str1, char* str2)
 {
-	int i, val = -1;
+	int i;
 
-	for (i = 0; i < _strlen(arg); i++)
-	{
-		if (val == -1)
-		{
-			val = ((int)arg[i] - 48);
-			continue;
-		}
-		val *= 10;
-		val += ((int)arg[i] - 48);
-	}
+	if (_strlen(str1) != _strlen(str2))
+		return (0);
+	
+	for (i = 0; i < _strlen(str1); i++)
+		if (str1[i] != str2[i])
+			return (0);
 
-	return (val);
+	return (1);
 }

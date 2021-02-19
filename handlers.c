@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <stdio.h>
 /* Functions who manage special commands, cd or exit */
 
 /**
@@ -16,11 +17,11 @@ int check_handlers(char *str)
 	if (!str)
 		return (handler_id);
 
-	if (!strcmp(str, "exit"))
+	if (eq(str, "exit"))
 		handler_id = 1;
-	else if (!strcmp(str, "cd"))
+	else if (eq(str, "cd"))
 		handler_id = 2;
-	else if (!strcmp(str, "env"))
+	else if (eq(str, "env"))
 		handler_id = 3;
 
 	return (handler_id);
@@ -43,14 +44,12 @@ void exit_handler(cmdbuf_t *cmd, int *exit_var_addr)
 	printf("exit\n");
 	if (cmd->argv[1] != NULL)
 	{
-		*exit_var_addr = char_toint(cmd->argv[1]);
-		destroy(cmd->argv, cmd->size);
-		free(cmd);
+		*exit_var_addr = 0;
+		drop(cmd);
 		return;
 	}
 	*exit_var_addr = 0;
-	destroy(cmd->argv, cmd->size);
-	free(cmd);
+	drop(cmd);
 }
 
 /**
@@ -71,15 +70,14 @@ void change_dir(cmdbuf_t *cmd)
 	{
 		err_handler = chdir(cmd->argv[1]);
 		if (err_handler < 0)
-			perror("cd");
+			perror(cmd->err_name);
 	}
 	else
 	{
 		home_ptr = get_env("HOME", cmd->env);
 		if (chdir(home_ptr) < 0)
-			printf("HOME VARIABLE DOES NOT EXIST\n");
+			perror(cmd->err_name);
 	}
 	free(home_ptr);
-	destroy(cmd->argv, cmd->size);
-	free(cmd);
+	drop(cmd);
 }

@@ -8,12 +8,14 @@
  */
 void _signal(int n)
 {
+	VIRTUAL_ENV(NULL, "free");
 	exit(n);
 }
 
 /**
  * get_input - get input
  * Desc: get_input function that reads stdin
+ * @proc_result: code result of the last command executed
  * Return: returns buffer stdin input
  */
 input_t *get_input(int proc_result)
@@ -27,7 +29,10 @@ input_t *get_input(int proc_result)
 	signal(SIGPIPE, _signal);
 	n = read(STDIN_FILENO, stack, READ_SIZE);
 	if (n < 1)
+	{
+		VIRTUAL_ENV(NULL, "free");
 		exit(proc_result);
+	}
 	stack[n - 1] = '\0';
 	input = malloc(sizeof(input_t));
 	input->buffer = _strdup(stack);

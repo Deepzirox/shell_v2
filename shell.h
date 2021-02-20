@@ -28,7 +28,8 @@
  * @env: First member
  * @argv: Second member
  * @size: Third member
- *
+ * @err_name: four member
+ * @pre_alias: five member
  * Description: stores argument string size, pointers to string arguments
  * and pointers to environment arguments
  */
@@ -39,6 +40,7 @@ typedef struct CommandBuffer
 	char *err_name;
 	char *pre_alias;
 	size_t size;
+	size_t size_env;
 } cmdbuf_t;
 
 /**
@@ -55,13 +57,17 @@ typedef struct InputBuffer
 	size_t size;
 } input_t;
 
+char **VIRTUAL_ENV(size_t *n, const char *flag);
+
 input_t *get_input(int proc_result);
 cmdbuf_t *parse_input(input_t *input);
+cmdbuf_t *parse_command_buffer(int proc_result, char *errname);
 size_t n_argv_allocate(input_t *input);
 int counttok(char *buff);
 int check_handlers(char *str);
 int char_toint(char *arg);
 char **get_arguments(int count_tok, char *buff);
+char **clone_environ(size_t *var_num);
 void destroy(char **ar, int count);
 void exit_handler(cmdbuf_t *cmd, int *exit_var_addr);
 void print_env(cmdbuf_t *cmd, char **env);
@@ -75,5 +81,6 @@ char *_strdup(char *str);
 char *parse_alias(char *exe);
 char *get_env(char *varname, char **env);
 int forking(cmdbuf_t *cmd);
-int eq(char *str1, char* str2);
+int eq(char *str1, char *str2);
+int run_shell(char *errname);
 #endif

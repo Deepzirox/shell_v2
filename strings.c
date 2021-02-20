@@ -71,14 +71,19 @@ int _strlen(char *s)
 	return (x);
 }
 
-// compara 2 strings si son iguales 0 falso 1 verdadero
-int eq(char *str1, char* str2)
+/**
+ * eq - compare two strings
+ * @str1: string 1
+ * @str2: string 2
+ * Return: 1 if equal 0 if not
+ */
+int eq(char *str1, char *str2)
 {
 	int i;
 
 	if (_strlen(str1) != _strlen(str2))
 		return (0);
-	
+
 	for (i = 0; i < _strlen(str1); i++)
 		if (str1[i] != str2[i])
 			return (0);

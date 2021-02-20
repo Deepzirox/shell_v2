@@ -9,6 +9,7 @@
 void drop(cmdbuf_t *cmd)
 {
 	destroy(cmd->argv, cmd->size);
+	destroy(cmd->env, cmd->size_env);
 	free(cmd->pre_alias);
 	free(cmd);
 }

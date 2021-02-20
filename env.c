@@ -1,5 +1,6 @@
 #include "shell.h"
 
+
 /**
  * parse_env - entry point
  * Desc: parse_env function that parses arguments if their present
@@ -79,4 +80,32 @@ char *get_env(char *varname, char **env)
 		}
 	}
 	return (NULL);
+}
+
+char **clone_environ(size_t *var_num)
+{
+	size_t var_number = 0, i;
+	char **new_env = NULL;
+	char **_env = NULL;
+
+	F_LOCK;
+
+	/* We have to get the pointer now that we have the lock and not earlier
+		since another thread might have created a new environment.  */
+	_env = __environ;
+
+	for (; _env[var_number] != NULL; var_number++)
+		;
+
+	new_env = malloc(sizeof(char *) * var_number);
+
+	for (i = 0; i < var_number - 1; i++)
+		new_env[i] = _strdup(_env[i]);
+
+	new_env[var_number - 1] = NULL;
+	*var_num = var_number - 1;
+
+	/** Unlock region **/
+	F_ULOCK;
+	return (new_env);
 }

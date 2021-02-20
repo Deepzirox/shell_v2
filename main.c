@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <stdio.h>
 
 /**
  * main - entry to main
@@ -13,6 +14,7 @@ int main(int argc, char **argv, char **env)
 	int exit_code = 0;
 
 	UNUSED(argc);
-	exit_code = run_shell(argv[0], env);
+	UNUSED(env);
+	exit_code = run_shell(argv[0]);
 	return (exit_code);
 }

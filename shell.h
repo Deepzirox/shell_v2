@@ -14,6 +14,9 @@
 #define READ_SIZE 1024
 #define UNUSED(x) (void)(x)
 
+# define LOCK        __libc_lock_lock (envlock)
+# define UNLOCK      __libc_lock_unlock (envlock)
+
 #define KNRM  "\x1B[0m"
 #define KRED  "\x1B[31m"
 #define KGRN  "\x1B[32m"
@@ -40,6 +43,7 @@ typedef struct CommandBuffer
 	char *err_name;
 	char *pre_alias;
 	size_t size;
+	size_t size_env;
 } cmdbuf_t;
 
 /**
@@ -58,12 +62,13 @@ typedef struct InputBuffer
 
 input_t *get_input(int proc_result);
 cmdbuf_t *parse_input(input_t *input);
-cmdbuf_t *parse_command_buffer(int proc_result, char *errname, char **env);
+cmdbuf_t *parse_command_buffer(int proc_result, char *errname);
 size_t n_argv_allocate(input_t *input);
 int counttok(char *buff);
 int check_handlers(char *str);
 int char_toint(char *arg);
 char **get_arguments(int count_tok, char *buff);
+char **clone_environ(size_t *var_num);
 void destroy(char **ar, int count);
 void exit_handler(cmdbuf_t *cmd, int *exit_var_addr);
 void print_env(cmdbuf_t *cmd, char **env);
@@ -78,5 +83,5 @@ char *parse_alias(char *exe);
 char *get_env(char *varname, char **env);
 int forking(cmdbuf_t *cmd);
 int eq(char *str1, char *str2);
-int run_shell(char *errname, char **env);
+int run_shell(char *errname);
 #endif

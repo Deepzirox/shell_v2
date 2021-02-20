@@ -58,6 +58,7 @@ typedef struct InputBuffer
 
 input_t *get_input(int proc_result);
 cmdbuf_t *parse_input(input_t *input);
+cmdbuf_t *parse_command_buffer(int proc_result, char *errname, char **env);
 size_t n_argv_allocate(input_t *input);
 int counttok(char *buff);
 int check_handlers(char *str);
@@ -77,4 +78,5 @@ char *parse_alias(char *exe);
 char *get_env(char *varname, char **env);
 int forking(cmdbuf_t *cmd);
 int eq(char *str1, char *str2);
+int run_shell(char *errname, char **env);
 #endif

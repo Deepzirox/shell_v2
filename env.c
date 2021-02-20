@@ -82,6 +82,7 @@ char *get_env(char *varname, char **env)
 	return (NULL);
 }
 
+// varnum devuelve el numero de variables
 char **clone_environ(size_t *var_num)
 {
 	size_t var_number = 0, i;
@@ -91,7 +92,7 @@ char **clone_environ(size_t *var_num)
 	F_LOCK;
 
 	/* We have to get the pointer now that we have the lock and not earlier
-		since another thread might have created a new environment.  */
+		since another thread might have created a new environment lol*/
 	_env = __environ;
 
 	for (; _env[var_number] != NULL; var_number++)

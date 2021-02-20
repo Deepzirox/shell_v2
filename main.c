@@ -1,5 +1,5 @@
 #include "shell.h"
-#include <stdio.h>
+
 
 /**
  * main - entry to main
@@ -15,6 +15,8 @@ int main(int argc, char **argv, char **env)
 
 	UNUSED(argc);
 	UNUSED(env);
+	VIRTUAL_ENV(NULL, "init");
 	exit_code = run_shell(argv[0]);
+	VIRTUAL_ENV(NULL, "free");
 	return (exit_code);
 }

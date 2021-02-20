@@ -1,6 +1,4 @@
 #include "shell.h"
-#include <unistd.h>
-
 
 /**
  * run_shell - entry point to shell
@@ -47,7 +45,7 @@ cmdbuf_t *parse_command_buffer(int proc_result, char *errname)
 
 	cmd->err_name = errname; /* inmutable */
 	cmd->pre_alias = _strdup(cmd->argv[0]);
-	cmd->env = clone_environ(&n_envs); /* mutable copy of env */
+	cmd->env = VIRTUAL_ENV(&n_envs, "init");
     cmd->size_env = n_envs;
 	free(input->buffer);
 	free(input);

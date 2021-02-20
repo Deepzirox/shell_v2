@@ -2,7 +2,10 @@
 #include <stdio.h>
 /* Functions to child processes */
 
-// me ahorra 3 lineas de codigo xd
+/**
+ * drop - delete all contained in cmd
+ * @cmd: command buffer
+ */
 void drop(cmdbuf_t *cmd)
 {
 	destroy(cmd->argv, cmd->size);
@@ -24,8 +27,8 @@ int forking(cmdbuf_t *cmd)
 
 	child = fork();
 	if (child == -1)
-		return(1);
-	
+		return (1);
+
 	if (child == 0)
 	{
 		if (cmd->argv[0])
@@ -34,7 +37,7 @@ int forking(cmdbuf_t *cmd)
 			if (quit == -1)
 			{
 				quit = 127;
-				fprintf(stderr, "%s: %d: %s: not found\n", 
+				fprintf(stderr, "%s: %d: %s: not found\n",
 					cmd->err_name, 1, cmd->pre_alias);
 				drop(cmd);
 				exit(quit);

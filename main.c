@@ -23,6 +23,7 @@ int main(int argc, char **argv, char **env)
  * run_shell - entry point
  * Desc: run_shell function that executes hsh
  * @env: double pointer to environment variables
+ * @errname: program name for error msg
  * Return: returns a prompt to hsh shell v2
  */
 int run_shell(char *errname, char **env)
@@ -36,6 +37,7 @@ int run_shell(char *errname, char **env)
 		fflush(STDIN_FILENO);
 		input_t *input = get_input(proc_result);
 		cmdbuf_t *cmd = parse_input(input);
+
 		cmd->err_name = errname;
 		cmd->pre_alias = _strdup(cmd->argv[0]);
 		cmd->env = env;

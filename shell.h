@@ -28,7 +28,8 @@
  * @env: First member
  * @argv: Second member
  * @size: Third member
- *
+ * @err_name: four member
+ * @pre_alias: five member
  * Description: stores argument string size, pointers to string arguments
  * and pointers to environment arguments
  */
@@ -75,5 +76,5 @@ char *_strdup(char *str);
 char *parse_alias(char *exe);
 char *get_env(char *varname, char **env);
 int forking(cmdbuf_t *cmd);
-int eq(char *str1, char* str2);
+int eq(char *str1, char *str2);
 #endif

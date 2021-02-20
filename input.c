@@ -14,6 +14,7 @@ void _signal(int n)
 /**
  * get_input - get input
  * Desc: get_input function that reads stdin
+ * @proc_result: code result of the last command executed
  * Return: returns buffer stdin input
  */
 input_t *get_input(int proc_result)

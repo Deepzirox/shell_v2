@@ -14,9 +14,6 @@
 #define READ_SIZE 1024
 #define UNUSED(x) (void)(x)
 
-# define LOCK        __libc_lock_lock (envlock)
-# define UNLOCK      __libc_lock_unlock (envlock)
-
 #define KNRM  "\x1B[0m"
 #define KRED  "\x1B[31m"
 #define KGRN  "\x1B[32m"

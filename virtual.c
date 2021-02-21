@@ -35,6 +35,8 @@ char **VIRTUAL_ENV(size_t *n, const char *flag, cmdbuf_t *cmd)
 			virtual_env = push_env(virtual_env, cmd->argv[1], num);
 			drop(cmd);
 			break;
+		case 4:
+			break;
 	}
 	if (n)
 		*n = num;
@@ -43,19 +45,21 @@ char **VIRTUAL_ENV(size_t *n, const char *flag, cmdbuf_t *cmd)
 
 int _env_option(char *str) 
 {
-  int handler_id = 0;
+	int handler_id = 0;
+	
+	if (!str)
+		return (handler_id);
+	
+	if (eq(str, "init"))
+		handler_id = 1;
+	else if (eq(str, "free"))
+		handler_id = 2;
+	else if (eq(str, "set"))
+		handler_id = 3;
+	else if (eq(str, "get"))
+		handler_id = 4;
 
-  if (!str)
 	return (handler_id);
-
-  if (eq(str, "init"))
-	handler_id = 1;
-  else if (eq(str, "free"))
-	handler_id = 2;
-  else if (eq(str, "set"))
-	handler_id = 3;
-
-  return (handler_id);
 }
 
 void _free_env(char **virtual_env) 

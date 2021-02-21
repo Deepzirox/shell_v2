@@ -38,6 +38,8 @@ int forking(cmdbuf_t *cmd)
 			if (quit == -1)
 			{
 				quit = 127;
+				fprintf(stderr, "%s: %d: %s: not found\n",
+					cmd->err_name, 1, cmd->pre_alias);
 				drop(cmd);
 				exit(quit);
 			}

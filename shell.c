@@ -46,9 +46,9 @@ cmdbuf_t *parse_command_buffer(int proc_result, char *errname)
 	cmdbuf_t *cmd = parse_input(input);
     size_t n_envs = 0;
 
-	cmd->err_name = errname; /* inmutable */
+	cmd->err_name = errname;
 	cmd->pre_alias = _strdup(cmd->argv[0]);
-	cmd->env = VIRTUAL_ENV(&n_envs, "init", cmd);
+	cmd->env = VIRTUAL_ENV(&n_envs, "get", cmd);
     cmd->size_env = n_envs;
 	free(input->buffer);
 	free(input);

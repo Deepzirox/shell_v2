@@ -32,7 +32,7 @@ char **VIRTUAL_ENV(size_t *n, const char *flag, cmdbuf_t *cmd)
 			_free_env(virtual_env);
 			return (NULL);
 		case 3:
-			push_env(virtual_env, cmd->argv[1]);
+			virtual_env = push_env(virtual_env, cmd->argv[1], num);
 			drop(cmd);
 			break;
 	}
@@ -84,8 +84,13 @@ char **_init_env(size_t *n)
 }
 
 
-char **push_env(char **virtual_env, char *value)
+char **push_env(char **virtual_env, char *value, size_t n)
 {
-	printf("value to set: %s\n", value);
+	size_t i;
+
+	for (i = 0; i < n; i++)
+		printf("%s\n", virtual_env[i]);
+	printf("finish env\n");
+	printf("value to change %s\n", value);
 	return (virtual_env);
 }

@@ -28,6 +28,9 @@ int run_shell(char *errname)
 			case 3:
 				print_env(cmd, cmd->env);
 				continue;
+			case 4:
+				VIRTUAL_ENV(NULL, "set", cmd);
+				continue;
 			}
 			cmd->argv[0] = parse_alias(cmd->argv[0]);
 		}
@@ -45,7 +48,7 @@ cmdbuf_t *parse_command_buffer(int proc_result, char *errname)
 
 	cmd->err_name = errname; /* inmutable */
 	cmd->pre_alias = _strdup(cmd->argv[0]);
-	cmd->env = VIRTUAL_ENV(&n_envs, "init");
+	cmd->env = VIRTUAL_ENV(&n_envs, "init", cmd);
     cmd->size_env = n_envs;
 	free(input->buffer);
 	free(input);

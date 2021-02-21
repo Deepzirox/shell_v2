@@ -1,5 +1,6 @@
 #include "shell.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 
 /**
@@ -90,11 +91,21 @@ char **_init_env(size_t *n)
 
 char **push_env(char **virtual_env, char *value, size_t n)
 {
-	size_t i;
+	//char **new_vr_env = NULL;
+	UNUSED(n);
 
-	for (i = 0; i < n; i++)
-		printf("%s\n", virtual_env[i]);
-	printf("finish env\n");
-	printf("value to change %s\n", value);
+	if (!value)
+	{
+		fprintf(stderr, "%ssetenv: no value to set\n%s", KRED, KGRN);
+		return (virtual_env);
+	}
+	for (size_t i = 0; i < n; i++)
+	{
+		char *tmp = get_key(virtual_env[i]);
+		char *tmp2 = get_value(virtual_env[i]);
+		printf("%s = %s\n", tmp, tmp2);
+		free(tmp);
+		free(tmp2);
+	}
 	return (virtual_env);
 }

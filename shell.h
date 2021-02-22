@@ -25,11 +25,12 @@
 
 /**
  * struct CommandBuffer - struct for command buffer
- * @env: First member
- * @argv: Second member
- * @size: Third member
- * @err_name: four member
- * @pre_alias: five member
+ * @env: first member
+ * @argv: second member
+ * @err_name: third member
+ * @pre_alias: fourth member
+ * @size: fifth member
+ * @size_env: sixth member
  * Description: stores argument string size, pointers to string arguments
  * and pointers to environment arguments
  */
@@ -45,8 +46,8 @@ typedef struct CommandBuffer
 
 /**
  * struct InputBuffer - struct buffer for stdin input
- * @buffer: First member
- * @size: Second member
+ * @buffer: first member
+ * @size: second member
  *
  * Description: buffer that stores stdin in a buffer with size
  * to be handled by functions
@@ -90,4 +91,5 @@ char *get_env(char *varname, char **env);
 int forking(cmdbuf_t *cmd);
 int eq(char *str1, char *str2);
 int run_shell(char *errname);
+
 #endif

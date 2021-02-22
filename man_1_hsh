@@ -12,6 +12,45 @@ hsh is a Copyright (C) 2021 by Holberton Low-level Team
 .SH DESCRIPTION
 .B Hsh
 is an interactive interface that allows users to execute commands and utilities in Linux and other UNIX based operatin systems. The shell lets the user interact internally with the system by using built-in functions. When a user types in a command, this is interpreted as an input that will execute a program. Once the program is finished, it will display an output.
+.SH COMMANDS
+.SY ls
+.B -
+Command is used to view the contents of a directory.
+.SY pwd
+.B -
+Command to find out the path of the current working directory.
+.SY cd
+.B -
+Command used to navigate through linux files and directories.
+.SY cat
+.B -
+Coomand used to list the contents of a file on the standard output (sdout).
+.SY cp
+.B -
+Command to copy files from the current directory to a different directory.
+.SY mv
+.B -
+Command is to move files, although it can also be used to rename files.
+.SY mkdir
+.B -
+Command to make a new directory
+.SY rm
+.B -
+Command is used to delete directories and the contents within them.
+.SY grep
+.B -
+Command that lets you search through all the text in a given file.
+.SY wc
+.B -
+Command tp print newline, word, and byte counts for each file
+.PP
+Check the
+.B /bin
+directory to find out about more available commands. Check the
+.B man
+page of each
+.I command
+to learn how to use them.
 .SH OPTIONS
 The shell v2 (
 .B hsh
@@ -35,6 +74,16 @@ will output an error message with an invalid or not found message.
 If you have any questions on the usage of the options for each command check its man page (
 .B man ls, man echo, man cat,
 etc.).
+.PP
+.B Examples:
+.P
+.SY ls
+.OP -la
+will list the files and directories with detailed information like the permissions, size, owner, etc.
+.P
+.SY wc
+.OP -l FILE...
+will count the number of lines in a file.
 .SH ARGUMENTS
 The first argument will always be assumed to be the name of a file containing shell commands. These shell commands are stored in the
 .B /bin
@@ -60,6 +109,7 @@ reads and executes commands from the file, then exits. If no command is executed
 .B hsh
 will return exit status 0.
 .SH FILES
+.B argv.c, alias.c, env.c, env2.c, handlers.c, input.c, main.c, process.c, shell.c, shell.h, strings.c, virtual.c.
 .SH SEE ALSO
 bash(1), sh or dash(1)
 .SH BUGS

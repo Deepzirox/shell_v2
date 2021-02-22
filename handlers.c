@@ -18,11 +18,13 @@ int check_handlers(char *str)
 		return (handler_id);
 
 	if (eq(str, "exit"))
-		handler_id = 1;
+		handler_id = 0x01;
 	else if (eq(str, "cd"))
-		handler_id = 2;
+		handler_id = 0x02;
 	else if (eq(str, "env"))
-		handler_id = 3;
+		handler_id = 0x03;
+	else if (eq(str, "setenv"))
+		handler_id = 0x04;
 
 	return (handler_id);
 }

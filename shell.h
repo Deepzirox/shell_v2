@@ -57,7 +57,14 @@ typedef struct InputBuffer
 	size_t size;
 } input_t;
 
-char **VIRTUAL_ENV(size_t *n, const char *flag);
+char **VIRTUAL_ENV(size_t *n, const char *flag, cmdbuf_t *cmd);
+void _free_env(char **virtual_env);
+char **_init_env(size_t *n);
+int _env_option(char *str);
+char **push_env(char **virtual_env, char *value, size_t n);
+
+char *get_key(char *var);
+char *get_value(char *var);
 
 input_t *get_input(int proc_result);
 cmdbuf_t *parse_input(input_t *input);

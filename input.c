@@ -8,7 +8,7 @@
  */
 void _signal(int n)
 {
-	VIRTUAL_ENV(NULL, "free");
+	VIRTUAL_ENV(NULL, "free", NULL);
 	exit(n);
 }
 
@@ -30,7 +30,7 @@ input_t *get_input(int proc_result)
 	n = read(STDIN_FILENO, stack, READ_SIZE);
 	if (n < 1)
 	{
-		VIRTUAL_ENV(NULL, "free");
+		VIRTUAL_ENV(NULL, "free", NULL);
 		exit(proc_result);
 	}
 	stack[n - 1] = '\0';

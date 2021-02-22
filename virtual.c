@@ -1,34 +1,31 @@
 #include "shell.h"
-#include <stdio.h>
-#include <stdlib.h>
-
 
 /**
-		Crea un entorno virtual en memoria estatica pero dinamica (heap)
-		Acá se podran obtener las variables desde Linux y, pero tambien creara
-		su propio espacio totalmente ajeno a __environ GNU y se podran agregar
-		variables totalmente nuevas que no afecten sistemas externos.
-		ya que todo sucede en la memoria estatica del programa.
-
-		@flag -> opcion que se ejecutara para manejar enviroment virtual
-		@n -> numero de variables leidas
-**/
-char **VIRTUAL_ENV(size_t *n, const char *flag, cmdbuf_t *cmd) 
+ * VIRTUAL_ENV - entry to VIRTUAL ENV
+ * Desc: VIRTUAL_ENV creates a virtual static memory but dynamic heap.
+ * Variables can be obtained from Linux but also its own space to
+ * __environ. New variables will be added that will no affect external
+ * systems, everything happens inside the static memory of the program.
+ * @n: int type number of read variables
+ * @flag: const char type option that will execute to manage VE (virtual env)
+ * @cmd: pointer to buf
+ * Return: new virtual environment
+ */
+char **VIRTUAL_ENV(size_t *n, const char *flag, cmdbuf_t *cmd)
 {
-	static char **virtual_env = NULL;
-	static size_t num = 0;
+	static char **virtual_env;
+	static size_t num;
 
 	if (!__environ)
-		return NULL;
+		return (NULL);
 
-	/** Search for flag options **/
-	switch (_env_option((char *)flag)) 
+	/* Search for flag options */
+	switch (_env_option((char *)flag))
 	{
 		case 1:
 			if (!virtual_env)
 				virtual_env = _init_env(&num);
 			return (virtual_env);
-			break;
 		case 2:
 			_free_env(virtual_env);
 			return (NULL);
@@ -44,13 +41,19 @@ char **VIRTUAL_ENV(size_t *n, const char *flag, cmdbuf_t *cmd)
 	return (virtual_env);
 }
 
-int _env_option(char *str) 
+/**
+ * _env_option - entry to env option
+ * Desc: _env_option function that handles ids
+ * @str: pointer to char to string id handler
+ * Return: return handler id
+ */
+int _env_option(char *str)
 {
 	int handler_id = 0;
-	
+
 	if (!str)
 		return (handler_id);
-	
+
 	if (eq(str, "init"))
 		handler_id = 1;
 	else if (eq(str, "free"))
@@ -63,7 +66,13 @@ int _env_option(char *str)
 	return (handler_id);
 }
 
-void _free_env(char **virtual_env) 
+/**
+ * _free_env - entry to free env
+ * Desc: _free_env function that frees memory
+ * @virtual_env: double pointer to char type to virtual env
+ * Return: free virtual env memory
+ */
+void _free_env(char **virtual_env)
 {
 	size_t i;
 
@@ -75,23 +84,36 @@ void _free_env(char **virtual_env)
 	}
 }
 
-char **_init_env(size_t *n) 
+/**
+ * _init_env - entry to inti env
+ * Desc: _init_env function that clones environment
+ * @n: size_t pointer type to n
+ * Return: return virtual environmenr
+ */
+char **_init_env(size_t *n)
 {
-	char ** virtual_env = NULL;
+	char **virtual_env = NULL;
 
-	if (n) 
+	if (n)
 	{
-	  virtual_env = clone_environ(n);
-	  return (virtual_env);
-	} 
+		virtual_env = clone_environ(n);
+		return (virtual_env);
+	}
 
 	return (virtual_env);
 }
 
-
+/**
+ * push_env - entry to push env
+ * Desc: push_env function to print key and value
+ * @virtual_env: double pointer to char to virtual env
+ * @value: pointer char to value
+ * @n: size_t type size of n
+ * Return: returns virtual env
+ */
 char **push_env(char **virtual_env, char *value, size_t n)
 {
-	//char **new_vr_env = NULL;
+	/* char **new_vr_env = NULL; */
 	UNUSED(n);
 
 	if (!value)
@@ -103,6 +125,7 @@ char **push_env(char **virtual_env, char *value, size_t n)
 	{
 		char *tmp = get_key(virtual_env[i]);
 		char *tmp2 = get_value(virtual_env[i]);
+
 		printf("%s = %s\n", tmp, tmp2);
 		free(tmp);
 		free(tmp2);

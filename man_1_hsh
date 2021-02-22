@@ -42,8 +42,9 @@ Command is used to delete directories and the contents within them.
 Command that lets you search through all the text in a given file.
 .SY wc
 .B -
-Command tp print newline, word, and byte counts for each file
+Command to print newline, word, and byte counts for each file.
 .PP
+.P
 Check the
 .B /bin
 directory to find out about more available commands. Check the

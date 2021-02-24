@@ -12,18 +12,18 @@ int main(void)
 {
 	int pipefds[2];
 	char buffer[10];
+	char *pin = "12-345-67\0";
 
-	if(pipe(pipefds) == -1) {
+	if(pipe(pipefds) == -1)
+	{
 		perror("pipe");
 		exit(EXIT_FAILURE);
 	}
-
-	char *pin = "12-345-67\0";
 
 	write(pipefds[1], pin, 10);
 	read(pipefds[0], buffer, 10);
 
 	printf("PIN from pipe: %s\n", buffer);
 
-	return EXIT_SUCCESS;
+	return (EXIT_SUCCESS);
 }

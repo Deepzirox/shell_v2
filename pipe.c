@@ -11,17 +11,17 @@
 int main(void)
 {
 	int pipefds[2];
-	char buffer[5];
+	char buffer[10];
 
 	if(pipe(pipefds) == -1) {
 		perror("pipe");
 		exit(EXIT_FAILURE);
 	}
 
-	char *pin = "4128\0";
+	char *pin = "12-345-67\0";
 
-	write(pipefds[1], pin, 5);
-	read(pipefds[0], buffer, 5);
+	write(pipefds[1], pin, 10);
+	read(pipefds[0], buffer, 10);
 
 	printf("PIN from pipe: %s\n", buffer);
 

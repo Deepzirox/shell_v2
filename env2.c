@@ -6,6 +6,9 @@ char *get_key(char *var)
     int i;
     char tmp[1000];
 
+	if (!var)
+		return (NULL);
+
     for (i = 0; var[i] != '\0'; i++)
     {
         if (var[i] == '=')

@@ -92,20 +92,36 @@ char **_init_env(size_t *n)
 char **push_env(char **virtual_env, char *value, size_t n)
 {
 	//char **new_vr_env = NULL;
-	UNUSED(n);
+	char *value_key = get_key(value);
+	//char *value_val = get_value(value);
+	char *tmp = NULL, *value_val;
+	char tmp_buff[3000];
 
-	if (!value)
+	if (!value || !value_key)
 	{
-		fprintf(stderr, "%ssetenv: no value to set\n%s", KRED, KGRN);
+		fprintf(stderr, "setenv: no valid value to set\n");
 		return (virtual_env);
 	}
+	value_val = get_value(value);
 	for (size_t i = 0; i < n; i++)
 	{
-		char *tmp = get_key(virtual_env[i]);
-		char *tmp2 = get_value(virtual_env[i]);
-		printf("%s = %s\n", tmp, tmp2);
+		if (!virtual_env[i])
+			break;
+		tmp = get_key(virtual_env[i]);
+		if (!tmp)
+			break;
+		if (eq(tmp, value_key))
+		{
+			free(virtual_env[i]);
+			sprintf(tmp_buff, "%s=%s", value_key, value_val);
+			virtual_env[i] = _strdup(tmp_buff);
+			break;
+		}
 		free(tmp);
-		free(tmp2);
 	}
+	free(value_key);
+	free(value_val);
+	if (tmp)
+		free(tmp);
 	return (virtual_env);
 }

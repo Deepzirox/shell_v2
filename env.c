@@ -82,7 +82,12 @@ char *get_env(char *varname, char **env)
 	return (NULL);
 }
 
-// varnum devuelve el numero de variables
+/**
+ * clone_environ - entry to clone environ
+ * Desc: clone_environ function that counts number of variables
+ * @var_num: size_t type pointer to variable
+ * Return: returns the number of variables in new environment
+ */
 char **clone_environ(size_t *var_num)
 {
 	size_t var_number = 0, i;
@@ -91,8 +96,12 @@ char **clone_environ(size_t *var_num)
 
 	F_LOCK;
 
-	/* We have to get the pointer now that we have the lock and not earlier
-		since another thread might have created a new environment lol*/
+	/*
+	 * We need to get the pointer now that
+	 * we have the lock and not earlier, since
+	 * another thread might have created a
+	 * new environment.
+	 */
 	_env = __environ;
 
 	for (; _env[var_number] != NULL; var_number++)
@@ -106,7 +115,7 @@ char **clone_environ(size_t *var_num)
 	new_env[var_number - 1] = NULL;
 	*var_num = var_number - 1;
 
-	/** Unlock region **/
+	/* Unlock region */
 	F_ULOCK;
 	return (new_env);
 }

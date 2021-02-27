@@ -6,7 +6,7 @@ char *get_key(char *var)
     int i;
     char tmp[1000];
 
-	if (!var)
+	if (!var || !is_valid_key(var))
 		return (NULL);
 
     for (i = 0; var[i] != '\0'; i++)
@@ -18,7 +18,8 @@ char *get_key(char *var)
         }
         tmp[i] = var[i];
     }
-    return (NULL);
+    tmp[i] = '\0';
+    return (_strdup(tmp));
 }
 /** Obtiene el valor de una variable de entorno **/
 char *get_value(char *var)
@@ -29,7 +30,7 @@ char *get_value(char *var)
     for (i = 0; var[i] != '\0'; i++)
         if (var[i] == '=')
             break;
-    
+
     if (i)
     {
         for (z = i + 1; var[z] != '\0'; z++)
@@ -39,4 +40,18 @@ char *get_value(char *var)
     }
 
     return (NULL);
+}
+
+int is_valid_key(char *str)
+{
+    int i, res = 0;
+
+    if (!str)
+        return (res);
+
+    for (i = 0; i < _strlen(str); i++)
+        if (str[i] == '=' && str[i + 1] != '\0')
+            res = 1;
+
+    return (res);
 }

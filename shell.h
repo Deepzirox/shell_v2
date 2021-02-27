@@ -90,4 +90,5 @@ char *get_env(char *varname, char **env);
 int forking(cmdbuf_t *cmd);
 int eq(char *str1, char *str2);
 int run_shell(char *errname);
+int is_valid_key(char *str);
 #endif

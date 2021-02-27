@@ -1,7 +1,4 @@
 #include "shell.h"
-#include <stdio.h>
-#include <stdlib.h>
-
 
 /**
 		Crea un entorno virtual en memoria estatica pero dinamica (heap)
@@ -115,13 +112,11 @@ char **push_env(char **virtual_env, char *value, size_t n)
 			free(virtual_env[i]);
 			sprintf(tmp_buff, "%s=%s", value_key, value_val);
 			virtual_env[i] = _strdup(tmp_buff);
+			free(tmp);
 			break;
 		}
-		free(tmp);
 	}
 	free(value_key);
 	free(value_val);
-	if (tmp)
-		free(tmp);
 	return (virtual_env);
 }

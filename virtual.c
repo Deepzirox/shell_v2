@@ -113,9 +113,7 @@ char **_init_env(size_t *n)
  */
 char **push_env(char **virtual_env, char *value, size_t n)
 {
-	//char **new_vr_env = NULL;
 	char *value_key = get_key(value);
-	//char *value_val = get_value(value);
 	char *tmp = NULL, *value_val;
 	char tmp_buff[3000];
 

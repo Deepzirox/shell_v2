@@ -42,10 +42,6 @@ char *get_value(char *var)
 		if (var[i] == '=')
 			break;
 
-	for (i = 0; var[i] != '\0'; i++)
-		if (var[i] == '=')
-			break;
-
 	if (i)
 	{
 		for (z = i + 1; var[z] != '\0'; z++)
@@ -74,10 +70,4 @@ int is_valid_key(char *str)
 			res = 1;
 
 	return (res);
-}
-
-
-void push_env(char **virtual_env, char *value)
-{
-	
 }

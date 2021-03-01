@@ -31,6 +31,7 @@
  * @pre_alias: fourth member
  * @size: fifth member
  * @size_env: sixth member
+ * @raw_text: eighth member
  * Description: stores argument string size, pointers to string arguments
  * and pointers to environment arguments
  */
@@ -40,6 +41,7 @@ typedef struct CommandBuffer
 	char **argv;
 	char *err_name;
 	char *pre_alias;
+	char *raw_text;
 	size_t size;
 	size_t size_env;
 } cmdbuf_t;
@@ -62,8 +64,8 @@ char **VIRTUAL_ENV(size_t *n, const char *flag, cmdbuf_t *cmd);
 void _free_env(char **virtual_env);
 char **_init_env(size_t *n);
 int _env_option(char *str);
-char **push_env(char **virtual_env, char *value, size_t n);
-
+char **push_env(char **virtual_env, char *value, size_t *n);
+char **add_value(char **virtual, char *value, size_t *n);
 char *get_key(char *var);
 char *get_value(char *var);
 
@@ -75,6 +77,7 @@ int counttok(char *buff);
 int check_handlers(char *str);
 int char_toint(char *arg);
 char **get_arguments(int count_tok, char *buff);
+char *parse_raw(cmdbuf_t *cmd);
 char **clone_environ(size_t *var_num);
 void destroy(char **ar, int count);
 void exit_handler(cmdbuf_t *cmd, int *exit_var_addr);

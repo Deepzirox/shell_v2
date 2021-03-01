@@ -1,5 +1,4 @@
 #include "shell.h"
-#include <stdio.h>
 /* Functions who manage special commands, cd or exit */
 
 /**

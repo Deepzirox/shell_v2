@@ -120,10 +120,9 @@ char **push_env(char **virtual_env, char *value, size_t *n)
 
 	if (!value || !value_key)
 	{
-		fprintf(stderr, "setenv: no valid value to set %s\n", value);
+		fprintf(stderr, "virtual environ: no valid value to set: %s\n", value);
 		return (virtual_env);
 	}
-	printf("parsed: %s\n", value);
 	value_val = get_value(value);
 	sprintf(tmp_buff, "%s=%s", value_key, value_val);
 	for (size_t i = 0; i < *n; i++)
@@ -162,5 +161,6 @@ char **add_value(char **virtual, char *value, size_t *n)
 	new_vr_storage[*n + 1] = NULL;
 	_free_env(virtual);
 	*n += 1;
+	printf("virtual environ: new value added: %s\n", value);
 	return (new_vr_storage);
 }

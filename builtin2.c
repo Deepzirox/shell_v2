@@ -26,3 +26,50 @@ char *parse_alias(char *exe)
 	}
 	return (exe);
 }
+
+void history(char *new_history, const char *flag)
+{
+	static char **h = NULL;
+	static int h_added = 0;
+	int i;
+
+	if (eq((char *)flag, "init"))
+	{
+		h = malloc(sizeof(char *) * 4069);
+	}
+	else if (eq((char *)flag, "free") || !(h_added < 4069))
+	{
+		destroy(h, h_added);
+		h_added = 0;
+	}
+	else if (eq((char *)flag, "print"))
+		for (i = 0; i < h_added; i++)
+			printf("%d: %s\n", i, h[i]);
+	else if (eq((char *)flag, "push"))
+		if (new_history)
+		{
+			h[h_added++] = _strdup(new_history);
+			h[h_added] = NULL;
+		}
+}
+
+void help()
+{
+	printf("\n\
+	HSH help menu\n\
+	======================\n\
+	The shell is an interactive interface that allows users to execute commands and utilities in\n\
+	Linux and other UNIX based operatin systems\n\
+	\n\
+	built in functions:\n\
+		cd <path> - navegate to the given path\n\
+		history - show history of all commands typed\n\
+		env - list environmets variables\n\
+		setenv - set or add an environment variable\n\
+	\
+	manage programs:\n\
+		put your program in /bin folder and you can use it in the shell\n\
+		\
+	\n\
+	");
+}

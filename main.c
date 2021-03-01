@@ -16,7 +16,9 @@ int main(int argc, char **argv, char **env)
 	UNUSED(argc);
 	UNUSED(env);
 	VIRTUAL_ENV(NULL, "init", NULL);
+	history(NULL, "init");
 	exit_code = run_shell(argv[0]);
 	VIRTUAL_ENV(NULL, "free", NULL);
+	history(NULL, "free");
 	return (exit_code);
 }

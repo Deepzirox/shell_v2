@@ -31,6 +31,14 @@ int run_shell(char *errname)
 			case 4:
 				VIRTUAL_ENV(NULL, "set", cmd);
 				continue;
+			case 5:
+				history(NULL, "print");
+				drop(cmd);
+				continue;
+			case 6:
+				help();
+				drop(cmd);
+				continue;
 			}
 			cmd->argv[0] = parse_alias(cmd->argv[0]);
 		}
@@ -58,6 +66,8 @@ cmdbuf_t *parse_command_buffer(int proc_result, char *errname)
 	cmd->env = VIRTUAL_ENV(&n_envs, "get", cmd);
 	cmd->size_env = n_envs;
 	cmd->raw_text = parse_raw(cmd);
+	if (input->size > 0)
+		history(input->buffer, "push");
 	free(input->buffer);
 	free(input);
 	parse_env(&cmd);

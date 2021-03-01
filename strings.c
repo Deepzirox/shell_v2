@@ -81,6 +81,9 @@ int eq(char *str1, char *str2)
 {
 	int i;
 
+	if (!str1 || !str2)
+		return (0);
+
 	if (_strlen(str1) != _strlen(str2))
 		return (0);
 

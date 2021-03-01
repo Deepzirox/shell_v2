@@ -46,7 +46,7 @@ char *get_value(char *var)
 	{
 		for (z = i + 1; var[z] != '\0'; z++)
 			tmp[y++] = var[z];
-		tmp[y] = '\0';
+		tmp[y - 1] = '\0';
 		return (_strdup(tmp));
 	}
 

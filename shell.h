@@ -23,6 +23,7 @@
 #define KCYN  "\x1B[36m"
 #define KWHT  "\x1B[37m"
 
+
 /**
  * struct CommandBuffer - struct for command buffer
  * @env: first member
@@ -80,12 +81,14 @@ char **get_arguments(int count_tok, char *buff);
 char *parse_raw(cmdbuf_t *cmd);
 char **clone_environ(size_t *var_num);
 void destroy(char **ar, int count);
+void history(char *new_history, const char *flag);
 void exit_handler(cmdbuf_t *cmd, int *exit_var_addr);
 void print_env(cmdbuf_t *cmd, char **env);
 void change_dir(cmdbuf_t *cmd);
 void parse_env(cmdbuf_t **cmd);
 void drop(cmdbuf_t *cmd);
 void prompt(void);
+void help();
 int _strlen(char *s);
 char *_strcat(char *dest, char *src);
 char *_strdup(char *str);

@@ -23,6 +23,7 @@
 #define KCYN  "\x1B[36m"
 #define KWHT  "\x1B[37m"
 
+
 /**
  * struct CommandBuffer - struct for command buffer
  * @env: first member
@@ -31,6 +32,7 @@
  * @pre_alias: fourth member
  * @size: fifth member
  * @size_env: sixth member
+ * @raw_text: eighth member
  * Description: stores argument string size, pointers to string arguments
  * and pointers to environment arguments
  */
@@ -40,6 +42,7 @@ typedef struct CommandBuffer
 	char **argv;
 	char *err_name;
 	char *pre_alias;
+	char *raw_text;
 	size_t size;
 	size_t size_env;
 } cmdbuf_t;
@@ -62,8 +65,8 @@ char **VIRTUAL_ENV(size_t *n, const char *flag, cmdbuf_t *cmd);
 void _free_env(char **virtual_env);
 char **_init_env(size_t *n);
 int _env_option(char *str);
-char **push_env(char **virtual_env, char *value, size_t n);
-
+char **push_env(char **virtual_env, char *value, size_t *n);
+char **add_value(char **virtual, char *value, size_t *n);
 char *get_key(char *var);
 char *get_value(char *var);
 
@@ -75,14 +78,17 @@ int counttok(char *buff);
 int check_handlers(char *str);
 int char_toint(char *arg);
 char **get_arguments(int count_tok, char *buff);
+char *parse_raw(cmdbuf_t *cmd);
 char **clone_environ(size_t *var_num);
 void destroy(char **ar, int count);
+void history(char *new_history, const char *flag);
 void exit_handler(cmdbuf_t *cmd, int *exit_var_addr);
 void print_env(cmdbuf_t *cmd, char **env);
 void change_dir(cmdbuf_t *cmd);
 void parse_env(cmdbuf_t **cmd);
 void drop(cmdbuf_t *cmd);
 void prompt(void);
+void help();
 int _strlen(char *s);
 char *_strcat(char *dest, char *src);
 char *_strdup(char *str);
@@ -91,5 +97,5 @@ char *get_env(char *varname, char **env);
 int forking(cmdbuf_t *cmd);
 int eq(char *str1, char *str2);
 int run_shell(char *errname);
-
+int is_valid_key(char *str);
 #endif

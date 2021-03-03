@@ -11,6 +11,9 @@ char *get_key(char *var)
 	int i;
 	char tmp[1000];
 
+	if (!var || !is_valid_key(var))
+		return (NULL);
+
 	for (i = 0; var[i] != '\0'; i++)
 	{
 		if (var[i] == '=')
@@ -20,7 +23,8 @@ char *get_key(char *var)
 		}
 		tmp[i] = var[i];
 	}
-	return (NULL);
+	tmp[i] = '\0';
+	return (_strdup(tmp));
 }
 
 /**
@@ -42,9 +46,28 @@ char *get_value(char *var)
 	{
 		for (z = i + 1; var[z] != '\0'; z++)
 			tmp[y++] = var[z];
-		tmp[y] = '\0';
+		tmp[y - 1] = '\0';
 		return (_strdup(tmp));
 	}
 
 	return (NULL);
+}
+
+/**
+ * is_valid_key - check if the variable is valid
+ * @str: string
+ * Return: int
+ */
+int is_valid_key(char *str)
+{
+	int i, res = 0;
+
+	if (!str)
+		return (res);
+
+	for (i = 0; i < _strlen(str); i++)
+		if (str[i] == '=' && str[i + 1] != '\0')
+			res = 1;
+
+	return (res);
 }

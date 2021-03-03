@@ -8,8 +8,8 @@
  */
 void _signal(int n)
 {
-	VIRTUAL_ENV(NULL, "free", NULL);
-	exit(n);
+	UNUSED(n);
+	return;
 }
 
 /**

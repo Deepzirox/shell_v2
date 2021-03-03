@@ -30,7 +30,7 @@ char **VIRTUAL_ENV(size_t *n, const char *flag, cmdbuf_t *cmd)
 			_free_env(virtual_env);
 			return (NULL);
 		case 3:
-			virtual_env = push_env(virtual_env, cmd->argv[1], num);
+			virtual_env = push_env(virtual_env, cmd->raw_text, &num);
 			drop(cmd);
 			break;
 		case 4:
@@ -111,24 +111,56 @@ char **_init_env(size_t *n)
  * @n: size_t type size of n
  * Return: returns virtual env
  */
-char **push_env(char **virtual_env, char *value, size_t n)
+char **push_env(char **virtual_env, char *value, size_t *n)
 {
-	/* char **new_vr_env = NULL; */
-	UNUSED(n);
+	char *value_key = get_key(value);
+	char *tmp = NULL, *value_val;
+	char tmp_buff[3000];
+	int new_env_var = 1;
 
-	if (!value)
+	if (!value || !value_key)
 	{
-		fprintf(stderr, "%ssetenv: no value to set\n%s", KRED, KGRN);
+		fprintf(stderr, "virtual environ: no valid value to set: %s\n", value);
 		return (virtual_env);
 	}
-	for (size_t i = 0; i < n; i++)
+	value_val = get_value(value);
+	sprintf(tmp_buff, "%s=%s", value_key, value_val);
+	for (size_t i = 0; i < *n; i++)
 	{
-		char *tmp = get_key(virtual_env[i]);
-		char *tmp2 = get_value(virtual_env[i]);
-
-		printf("%s = %s\n", tmp, tmp2);
+		if (!virtual_env[i])
+			break;
+		tmp = get_key(virtual_env[i]);
+		if (!tmp)
+			break;
+		if (eq(tmp, value_key))
+		{
+			free(virtual_env[i]);
+			virtual_env[i] = _strdup(tmp_buff);
+			new_env_var = 0;
+			free(tmp);
+			break;
+		}
 		free(tmp);
-		free(tmp2);
 	}
+	if (new_env_var)
+		virtual_env = add_value(virtual_env, tmp_buff, n);
+	free(value_key);
+	free(value_val);
 	return (virtual_env);
+}
+
+/** Add value to virtual environ **/
+char **add_value(char **virtual, char *value, size_t *n)
+{
+	char **new_vr_storage = malloc(sizeof(char *) * (*n + 2));
+	size_t i;
+
+	for (i = 0; i < *n; i++)
+		new_vr_storage[i] = _strdup(virtual[i]);
+	new_vr_storage[*n] = _strdup(value);
+	new_vr_storage[*n + 1] = NULL;
+	_free_env(virtual);
+	*n += 1;
+	printf("virtual environ: new value added: %s\n", value);
+	return (new_vr_storage);
 }

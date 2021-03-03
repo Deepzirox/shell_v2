@@ -1,5 +1,4 @@
 #include "shell.h"
-#include <stdio.h>
 /* Functions who manage special commands, cd or exit */
 
 /**
@@ -25,6 +24,10 @@ int check_handlers(char *str)
 		handler_id = 0x03;
 	else if (eq(str, "setenv"))
 		handler_id = 0x04;
+	else if (eq(str, "history"))
+		handler_id = 0x05;
+	else if (eq(str, "help"))
+		handler_id = 0x06;
 
 	return (handler_id);
 }
